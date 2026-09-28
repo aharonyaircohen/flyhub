@@ -18,12 +18,12 @@ import {
   clearGitHubContext,
   setGitHubContext,
 } from "@kody-ade/base/github/core";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../../logger";
 import type { FlyPreviewConfig } from "../previews/machines-client";
 import { resolveFlyContext, type FlyContext } from "./context";
 import { listFlyInventory, type FlyInventory } from "./inventory";
 import { isFlyMachineRunning } from "./machine-model";
-import { createServerTtlCache } from "@kody-ade/base/server-ttl-cache";
+import { createServerTtlCache } from "../../server-ttl-cache";
 
 const FLY_INVENTORY_TTL_MS = 15_000;
 const flyInventoryCache = createServerTtlCache<FlyInventory>({

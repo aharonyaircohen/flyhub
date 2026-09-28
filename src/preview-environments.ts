@@ -12,7 +12,7 @@
  *   VIEW (see preview-views.ts) is a path under it — different axes.
  */
 
-import { slugifyTitle } from "@kody-ade/base/slug";
+import { slugifyTitle } from "./slug";
 
 export interface PreviewEnvironment {
   /** Stable id for React keys + selection state. */

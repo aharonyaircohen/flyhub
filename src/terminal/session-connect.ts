@@ -10,7 +10,7 @@ import "server-only";
 
 import type { NextRequest } from "next/server";
 
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import {
   buildTerminalWebSocketUrl,
   isTerminalFeatureAllowed,

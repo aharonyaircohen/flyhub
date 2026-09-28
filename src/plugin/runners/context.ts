@@ -20,7 +20,7 @@ import {
   getUserOctokit,
   resolveActorFromToken,
 } from "@kody-ade/base/auth";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../../logger";
 import { getEngineConfig } from "@kody-ade/base/engine/config";
 import type { FlyPreviewConfig } from "../previews/machines-client";
 import { readVault } from "@kody-ade/base/vault/store";

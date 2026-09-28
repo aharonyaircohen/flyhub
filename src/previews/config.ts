@@ -31,7 +31,7 @@ import {
   resolveFlyPreviews,
   type ResolvedFlyPreviews,
 } from "@kody-ade/base/engine/config";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { readVault } from "@kody-ade/base/vault/store";
 
 import type { ServerProviderConfig } from "../infrastructure/server-machines";

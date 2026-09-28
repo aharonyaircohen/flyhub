@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { claimOrRunServer, resolveServerContext } from "./server-run";
 import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
 

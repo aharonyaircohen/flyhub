@@ -7,7 +7,7 @@
  */
 
 import type { DeploymentProvider } from "@kody-ade/base/infrastructure/contracts";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import {
   getPreviewBuilderStatus,
   spawnPreviewBuilder,

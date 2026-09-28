@@ -16,7 +16,7 @@
  * Reference: https://docs.machines.dev/swagger/index.html
  */
 
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../../logger";
 import { prepareMachineSsh } from "../../ssh/machine-config";
 import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
 

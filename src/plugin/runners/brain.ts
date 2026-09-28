@@ -32,8 +32,8 @@ import { createHash, randomBytes } from "node:crypto";
 import { prepareMachineSsh } from "../../ssh/machine-config";
 import { MACHINE_SSH_START_SCRIPT } from "../../ssh/start-script";
 
-import { logger } from "@kody-ade/base/logger";
-import { slugifyTitle } from "@kody-ade/base/slug";
+import { logger } from "../../logger";
+import { slugifyTitle } from "../../slug";
 import type { EngineRuntimeModelConfig } from "@kody-ade/base/variables/models";
 
 const FLY_API_BASE = "https://api.machines.dev/v1";

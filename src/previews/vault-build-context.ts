@@ -21,7 +21,7 @@
 import { Octokit } from "@octokit/rest";
 
 import { resolveBackgroundToken } from "@kody-ade/base/auth/background-token";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { readVault } from "@kody-ade/base/vault/store";
 
 /**
