@@ -27,7 +27,7 @@ jobs:
       - uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ghcr.io/${{ github.repository_owner }}/kody-browser
+          images: ghcr.io/${{ github.repository_owner }}/flyhub-browser
           tags: |
             type=raw,value=latest
             type=sha

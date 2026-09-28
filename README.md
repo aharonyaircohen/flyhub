@@ -33,8 +33,10 @@ and runtime code.
 ## Publishing
 
 The browser image workflow builds `browser/Dockerfile` and publishes
-`ghcr.io/aharonyaircohen/kody-browser`. The builder deployment uses
+`ghcr.io/aharonyaircohen/flyhub-browser`. The builder deployment uses
 `builder/fly.toml` and `scripts/publish-preview-builder.mjs`. Kody's
 `builder:publish` command invokes that script from the Flyhub checkout.
+Set the new GHCR package to public after its first publish so Fly Machines can
+pull the image without registry credentials.
 
 Do not put Fly API tokens or other secrets in this repository.

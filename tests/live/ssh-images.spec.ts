@@ -17,7 +17,7 @@ import {
 import { applyMachineSshAccess } from "../../src/ssh/machine-config";
 it.skipIf(process.env.KODY_SSH_IMAGES !== "1").each([
   ["kody-brain:ssh-test", "root"],
-  ["kody-browser:ssh-test", "browser"],
+  ["flyhub-browser:ssh-test", "browser"],
     ["kody-preview:ssh-test", "root"],
 ])(
   "boots %s with its real entrypoint and preserves SSH across restart",

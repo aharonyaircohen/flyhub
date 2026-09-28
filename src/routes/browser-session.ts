@@ -48,7 +48,7 @@ const STREAM_TICKET_TTL_SECONDS = 5 * 60;
 const DIRECT_BROWSER_TICKET_TTL_SECONDS = 60 * 60;
 const DEFAULT_BROWSER_IMAGE =
   process.env.FLY_BROWSER_IMAGE ??
-  "ghcr.io/aharonyaircohen/kody-browser:latest";
+  "ghcr.io/aharonyaircohen/flyhub-browser:latest";
 const START_LEASE_MS = 75_000;
 
 const CapabilityBrowserScope = {
