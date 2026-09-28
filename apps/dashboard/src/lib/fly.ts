@@ -8,6 +8,7 @@ import {
   type FlyPreviewConfig,
 } from "../../../../src/plugin/previews/machines-client";
 import { listVolumes } from "../../../../src/apps/resources-client";
+import { mintBrowserTicket } from "../../../../src/browsers/ticket";
 
 export function flyConfig(): FlyPreviewConfig | null {
   const token = process.env.FLY_API_TOKEN?.trim();
@@ -43,4 +44,21 @@ export async function actOnMachine(
   if (action === "stop") return stopMachine(app, id, config);
   if (action === "suspend") return suspendMachine(app, id, config);
   return destroyMachine(app, id, config);
+}
+
+export function browserDirectUrl(app: string, machine: Awaited<ReturnType<typeof listMachines>>[number]): string {
+  if (!/^(?:kody|flyhub)-browser-[a-z0-9-]+$/.test(app)) throw new Error("Not a browser app");
+  const env = machine.config?.env;
+  const repository = env?.KODY_BROWSER_REPOSITORY;
+  const actorId = env?.KODY_BROWSER_ACTOR_ID;
+  const sessionId = env?.KODY_BROWSER_SESSION_ID;
+  const verifyKey = env?.KODY_BROWSER_VERIFY_KEY;
+  if (!repository || !actorId || !sessionId || typeof verifyKey !== "string" || !/^[a-fA-F0-9]{64}$/.test(verifyKey))
+    throw new Error("Browser session credentials are unavailable");
+  const { ticket } = mintBrowserTicket({ repository, actorId, sessionId, machineId: machine.id }, 300, Buffer.from(verifyKey, "hex"));
+  return `https://${app}.fly.dev/direct?ticket=${encodeURIComponent(ticket)}`;
+}
+
+export async function findMachine(app: string, id: string, config: FlyPreviewConfig) {
+  return (await listMachines(app, config)).find((machine) => machine.id === id);
 }

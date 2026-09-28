@@ -13,7 +13,7 @@ cp apps/dashboard/.env.example apps/dashboard/.env.local
 pnpm dev
 ```
 
-Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It currently lists the organization's apps and their machines and volumes and can start, stop, suspend, or destroy machines.
+Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It lists the organization's apps, machines, and volumes; can start, stop, suspend, or destroy machines; and can open a running browser machine with a short lived session ticket.
 
 `pnpm test`, `pnpm typecheck`, and `pnpm build` verify the standalone workspace. The active workspace installs no Kody packages.
 
