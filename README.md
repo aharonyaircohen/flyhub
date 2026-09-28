@@ -1,50 +1,34 @@
-# flyhub
+# Flyhub
 
-Fly.io infrastructure for Kody: preview apps, runner and Brain machines,
-terminal and browser transports, and image builders.
+Flyhub is a separate repository for Fly.io infrastructure. Its standalone dashboard connects directly to a Fly organization. The browser runtime and preview builder also live here.
 
-This is a separate repository with the history of `kody-chat/packages/fly`.
-Kody has not been switched to consume Flyhub. The TypeScript package still
-imports Kody platform packages and currently requires a compatible Kody
-workspace to typecheck and test all modules.
+## Run locally
 
-## Layout
-
-- `src/`: Fly providers, routes, previews, runners, machines, and transports
-- `builder/`: preview image builder and app gateway images
-- `browser/`: hosted browser runtime and Docker image
-- `tests/`: package unit and live integration tests
-- `src/dashboard/`: Fly pages and browser UI consumed by Kody route entrypoints
-- `apps/dashboard/`: standalone Flyhub dashboard (own login, Fly apps, machines, volumes)
-
-## Development
-
-The browser runtime has its own npm lockfile. The preview builder has its own
-pnpm lockfile. Both can be developed and built from this repository root.
-The dashboard UI imports Kody host layout, auth, and repository routing through
-the `@dashboard` alias. Those adapters need a host application. The browser
-image can be built from this repository root without a Kody checkout.
-
-The new dashboard can be installed and run without Kody packages:
+Install Node 22 and pnpm 9, then run:
 
 ```sh
-cd apps/dashboard
-pnpm install
-cp .env.example .env.local
-# Fill in FLYHUB_ADMIN_TOKEN, FLY_API_TOKEN, and FLY_ORG_SLUG.
+pnpm install --frozen-lockfile
+cp apps/dashboard/.env.example apps/dashboard/.env.local
+# Set FLYHUB_ADMIN_TOKEN, FLY_API_TOKEN, and FLY_ORG_SLUG in .env.local.
 pnpm dev
 ```
 
-Open `http://localhost:3334`. The admin token is used only to sign in; Fly
-credentials stay on the server. The dashboard is an initial standalone surface.
-Preview builds, browser sessions, runners, and legacy Kody route adapters still
-need to be moved before the whole repository is independent.
+Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It currently lists the organization's apps and their machines and volumes and can start, stop, suspend, or destroy machines.
 
-## Publishing
+`pnpm test`, `pnpm typecheck`, and `pnpm build` verify the standalone workspace. The active workspace installs no Kody packages.
 
-The browser image workflow builds `browser/Dockerfile` and publishes
-`ghcr.io/aharonyaircohen/flyhub-browser`. The builder deployment uses
-`builder/fly.toml` and `scripts/publish-preview-builder.mjs`. The GHCR image is
-public so Fly Machines can pull it without registry credentials.
+## Repository layout
 
-Do not put Fly API tokens or other secrets in this repository.
+- `apps/dashboard/`: Flyhub dashboard, login, and Fly API routes
+- `browser/`: browser runtime and published Docker image
+- `builder/`: preview image builder and app gateway images
+- `src/`: extracted Fly providers and older Kody integration code
+- `tests/`: portable Fly tests and older Kody integration tests
+
+The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Preview creation, browser sessions, runners, and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
+
+## Images
+
+The browser image workflow publishes `ghcr.io/aharonyaircohen/flyhub-browser`. The preview builder is still configured to publish to `kody-preview-builder`; its image and Fly app must move to Flyhub before independent preview builds are ready.
+
+Never commit Fly tokens or other secrets.

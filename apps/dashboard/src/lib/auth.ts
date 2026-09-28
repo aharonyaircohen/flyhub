@@ -52,7 +52,15 @@ export function isAdmin(request: NextRequest): boolean {
 
 export function isSameOrigin(request: NextRequest): boolean {
   const origin = request.headers.get("origin");
-  return !origin || origin === request.nextUrl.origin;
+  if (!origin) return true;
+  try {
+    const expectedHost = request.headers.get("host") || request.nextUrl.host;
+    const expectedProtocol = request.headers.get("x-forwarded-proto") || request.nextUrl.protocol.replace(":", "");
+    const actual = new URL(origin);
+    return actual.host === expectedHost && actual.protocol === `${expectedProtocol}:`;
+  } catch {
+    return false;
+  }
 }
 
 export const sessionMaxAge = SESSION_SECONDS;

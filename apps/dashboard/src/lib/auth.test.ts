@@ -22,13 +22,18 @@ describe("dashboard authentication", () => {
 
   it("requires a valid cookie for protected APIs", () => {
     process.env.FLYHUB_ADMIN_TOKEN = secret;
-    const anonymous = new NextRequest("http://localhost:3334/api/apps");
+    const anonymous = new NextRequest("http://localhost:3355/api/apps");
     expect(isAdmin(anonymous)).toBe(false);
-    const authorized = new NextRequest("http://localhost:3334/api/apps", { headers: { cookie: `flyhub_session=${createSession(secret)}` } });
+    const authorized = new NextRequest("http://localhost:3355/api/apps", { headers: { cookie: `flyhub_session=${createSession(secret)}` } });
     expect(isAdmin(authorized)).toBe(true);
   });
 
   it("rejects a cross-origin mutation", () => {
-    expect(isSameOrigin(new NextRequest("http://localhost:3334/api/session", { headers: { origin: "https://evil.example" } }))).toBe(false);
+    expect(isSameOrigin(new NextRequest("http://localhost:3355/api/session", { headers: { origin: "https://evil.example" } }))).toBe(false);
+  });
+
+  it("accepts the browser origin when Next rewrites its internal URL", () => {
+    const request = new NextRequest("http://localhost:3355/api/session", { headers: { host: "127.0.0.1:3355", origin: "http://127.0.0.1:3355" } });
+    expect(isSameOrigin(request)).toBe(true);
   });
 });
