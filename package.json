@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "pnpm --filter flyhub-dashboard dev",
     "build": "pnpm --filter flyhub-dashboard build",
+    "builder:publish": "node scripts/publish-preview-builder.mjs",
     "typecheck": "pnpm --filter flyhub-dashboard typecheck && pnpm --filter flyhub-preview-builder typecheck",
     "test": "pnpm exec vitest run --config vitest.standalone.config.ts && pnpm --filter flyhub-dashboard test"
   },

@@ -13,7 +13,7 @@ cp apps/dashboard/.env.example apps/dashboard/.env.local
 pnpm dev
 ```
 
-Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It lists the organization's apps, machines, and volumes; can start, stop, suspend, or destroy machines; and can open a running browser machine with a short lived session ticket.
+Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It lists the organization's apps, machines, and volumes; can start, stop, suspend, or destroy machines; build manual PR and branch previews; and create or open browser machines.
 
 `pnpm test`, `pnpm typecheck`, and `pnpm build` verify the standalone workspace. The active workspace installs no Kody packages.
 
@@ -25,10 +25,10 @@ Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly t
 - `src/`: extracted Fly providers and older Kody integration code
 - `tests/`: portable Fly tests and older Kody integration tests
 
-The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Preview creation, browser sessions, runners, and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
+The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Automated GitHub preview webhooks, runner dispatch, and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
 
 ## Images
 
-The browser image workflow publishes `ghcr.io/aharonyaircohen/flyhub-browser`. The preview builder is still configured to publish to `kody-preview-builder`; its image and Fly app must move to Flyhub before independent preview builds are ready.
+The browser image workflow publishes `ghcr.io/aharonyaircohen/flyhub-browser`. The preview builder uses the `flyhub-preview-builder` Fly app and is published with `pnpm builder:publish`. Manual PR and branch preview controls are available in the dashboard; publish the builder image before using them.
 
 Never commit Fly tokens or other secrets.

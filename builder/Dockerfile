@@ -39,4 +39,4 @@ COPY Dockerfile.app-gateway ./Dockerfile.app-gateway
 
 ENV NODE_ENV=production
 
-CMD ["sh", "-c", "if [ \"$KODY_BUILDER_KIND\" = app ]; then exec node --experimental-strip-types src/app-builder.ts; else exec node --experimental-strip-types src/builder.ts; fi"]
+CMD ["sh", "-c", "if [ \"$FLYHUB_BUILDER_KIND\" = app ]; then exec node --experimental-strip-types src/app-builder.ts; else exec node --experimental-strip-types src/builder.ts; fi"]

@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const BUILDER_APP =
-  process.env.KODY_PREVIEW_BUILDER_HOST_APP ?? "kody-preview-builder";
+  process.env.FLYHUB_PREVIEW_BUILDER_HOST_APP ?? "flyhub-preview-builder";
 
 const FLY_MACHINES_BASE =
   process.env.FLY_MACHINES_API_BASE ?? "https://api.machines.dev/v1";
@@ -67,6 +67,15 @@ async function listBuilderMachines(token, app = BUILDER_APP) {
   return (await res.json()) ?? [];
 }
 
+export async function ensureBuilderApp(token, orgSlug) {
+  const existing = await flyFetch(`/apps/${encodeURIComponent(BUILDER_APP)}`, token);
+  if (existing.status !== 404) return;
+  await flyFetch("/apps", token, {
+    method: "POST",
+    body: JSON.stringify({ app_name: BUILDER_APP, org_slug: orgSlug }),
+  });
+}
+
 async function destroyBuilderMachine(id, token, app = BUILDER_APP) {
   await flyFetch(
     `/apps/${encodeURIComponent(app)}/machines/${encodeURIComponent(id)}?force=true`,
@@ -124,6 +133,7 @@ export function builderPublishDeploySpec(app = BUILDER_APP) {
 async function runCli() {
   const token = process.env.FLY_API_TOKEN ?? process.env.FLY_ACCESS_TOKEN;
   if (!token) throw new Error("FLY_API_TOKEN or FLY_ACCESS_TOKEN is required");
+  await ensureBuilderApp(token, process.env.FLY_ORG_SLUG ?? "personal");
 
   const result = publishBuilderImage(token);
   const stdout = redactBuilderPublishOutput(result.stdout, token);

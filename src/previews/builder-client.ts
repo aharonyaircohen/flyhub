@@ -26,13 +26,14 @@ import { createHash } from "node:crypto";
 
 import { logger } from "../logger";
 import { derivePreviewKey } from "../preview-token";
+import { appExists, createApp } from "../plugin/previews/machines-client";
 
 const FLY_MACHINES_BASE = "https://api.machines.dev/v1";
 const BUILDER_IMAGE =
-  process.env.KODY_PREVIEW_BUILDER_IMAGE ??
-  "registry.fly.io/kody-preview-builder:latest";
+  process.env.FLYHUB_PREVIEW_BUILDER_IMAGE ??
+  "registry.fly.io/flyhub-preview-builder:latest";
 const BUILDER_HOST_APP =
-  process.env.KODY_PREVIEW_BUILDER_HOST_APP ?? "kody-preview-builder";
+  process.env.FLYHUB_PREVIEW_BUILDER_HOST_APP ?? "flyhub-preview-builder";
 
 const SPAWN_TIMEOUT_MS = 30_000;
 const BUILDER_MAINTENANCE_TIMEOUT_MS = 10_000;
@@ -346,6 +347,10 @@ export async function spawnPreviewBuilder(
 ): Promise<SpawnBuilderResult> {
   const tag = input.imageTag ?? defaultTagFor(input.repo, input.ref);
   const expectedUrl = `https://${input.appName}.fly.dev`;
+  const builderConfig = { token: input.flyToken, orgSlug: input.flyOrgSlug, defaultRegion: input.flyRegion };
+  if (!(await appExists(BUILDER_HOST_APP, builderConfig))) {
+    await createApp(BUILDER_HOST_APP, builderConfig);
+  }
   const existing = await pruneBuilderMachines(
     input.flyToken,
     input.appName,
@@ -378,7 +383,7 @@ export async function spawnPreviewBuilder(
         FLY_API_TOKEN: input.flyToken,
         FLY_ORG_SLUG: input.flyOrgSlug,
         FLY_REGION: input.flyRegion,
-        // Derived preview-verify key — HKDF of KODY_MASTER_KEY with info
+        // Derived preview-verify key — HKDF of FLYHUB_MASTER_KEY with info
         // "kody-preview:v1". The raw master key never leaves the dashboard.
         // The builder threads this to the preview machine as a runtime env,
         // where the doorman reads it to verify access tickets.
@@ -399,8 +404,8 @@ export async function spawnPreviewBuilder(
         // When set, the builder probes GHCR for a per-repo base image
         // (kp-<hash>-base:latest) and inherits from it via Docker FROM.
         // Drops a typical PR build from ~13 min cold to ~3 min.
-        ...(process.env.KODY_PREVIEW_GHCR_OWNER
-          ? { MIRROR_TO_GHCR_OWNER: process.env.KODY_PREVIEW_GHCR_OWNER }
+        ...(process.env.FLYHUB_PREVIEW_GHCR_OWNER
+          ? { MIRROR_TO_GHCR_OWNER: process.env.FLYHUB_PREVIEW_GHCR_OWNER }
           : {}),
         ...(input.buildMode ? { PREVIEW_BUILD_MODE: input.buildMode } : {}),
         // Preview machine knobs (from kody.config.json fly.previews). The
@@ -483,7 +488,7 @@ export async function spawnAppBuilder(
     config: {
       image: BUILDER_IMAGE,
       env: {
-        KODY_BUILDER_KIND: "app",
+        FLYHUB_BUILDER_KIND: "app",
         REPO: input.repo,
         REF: input.ref,
         APP_NAME: input.appName,

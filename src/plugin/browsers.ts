@@ -201,7 +201,7 @@ export function browserAppName(input: {
     .update(`${input.owner}/${input.repo}`)
     .digest("hex")
     .slice(0, 10);
-  return `kody-browser-${readable}-${hash}`.slice(0, 63);
+  return `flyhub-browser-${readable}-${hash}`.slice(0, 63);
 }
 
 function browserMachineEnv(session: {

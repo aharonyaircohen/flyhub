@@ -18,6 +18,7 @@ export default defineConfig({
       "tests/unit/preview-environments.spec.ts",
       "tests/unit/ssh-machine.spec.ts",
       "tests/unit/ssh-provisioning.spec.ts",
+      "tests/unit/publish-builder.spec.ts",
     ],
   },
 });

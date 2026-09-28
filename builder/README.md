@@ -1,58 +1,13 @@
-# kody-preview-builder
+# Flyhub preview builder
 
-Tiny Fly service that builds preview images for the dashboard's PR
-preview feature. **Consumer repos stay zero-touch** — no Dockerfile,
-no workflow, no secrets needed there.
+This image runs one build per Fly Machine. Flyhub supplies the repository, ref, target app, Fly token, and a derived preview verification key as machine environment variables. The builder clones the repository, builds and pushes its preview image with Fly's remote builder, starts the preview machine, and exits.
 
-## What it does
+The builder image is hosted in the Fly registry of the `flyhub-preview-builder` app. Publish it with `pnpm builder:publish` from the repository root after setting `FLY_API_TOKEN` and `FLY_ORG_SLUG`. The publisher creates the host app when needed, runs `flyctl deploy --build-only --push`, and removes accidental host machines. Publish the image before the first preview build.
 
-```
-POST /build { repo, ref, appName, flyToken, githubToken? }
-  1. Clones the repo at <ref> into /tmp
-  2. Drops in a default Dockerfile.preview if the repo has none
-  3. Runs `flyctl deploy --build-only --remote-only` against <appName>
-     → Fly's hosted remote builder does the heavy lifting; this
-       service stays small (no docker-in-docker)
-  4. Returns { image: "registry.fly.io/<appName>:<tag>", durationMs }
-```
+Set `FLYHUB_MASTER_KEY` in the dashboard environment. Flyhub derives a verification key and sends only that key to the builder, which passes it to the preview machine. Private repositories also need `GITHUB_TOKEN` in the dashboard environment.
 
-The dashboard creates the per-PR Fly app first, then calls `/build`,
-then boots a machine from the returned image. Each component owns one
-job: dashboard orchestrates lifecycle, builder produces images, the
-preview machine serves traffic.
+Build the image locally with:
 
-## Auth
-
-`X-Builder-Auth` shared key derived from `KODY_MASTER_KEY` (HKDF-style
-purpose-prefix hash). No additional env vars; both the dashboard and
-this service derive the same key independently.
-
-## Deploy
-
-```bash
-flyctl deploy -c builder/fly.toml --app kody-preview-builder
-flyctl secrets set KODY_MASTER_KEY=... --app kody-preview-builder
-```
-
-That's the whole bootstrap.
-
-## Local dev
-
-```bash
-cd builder
-pnpm install
-KODY_MASTER_KEY=dev pnpm dev
-```
-
-## File layout
-
-```
-builder/
-  Dockerfile                       Builder service image
-  fly.toml                         Fly deploy config
-  default-Dockerfile.preview       Used when consumer repo has none
-  src/
-    auth.ts                        KODY_MASTER_KEY-derived shared key
-    builder.ts                     git clone + flyctl deploy --build-only
-    server.ts                      Hono HTTP server (POST /build)
+```sh
+docker build -f builder/Dockerfile -t flyhub-builder:local builder
 ```

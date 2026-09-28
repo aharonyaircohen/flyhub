@@ -9,9 +9,9 @@
  * The doorman proxy in each preview machine recomputes the HMAC; valid ticket
  * → Set-Cookie, then proxy through; invalid/missing/expired → 401.
  *
- * The verify-only key is derived from `KODY_MASTER_KEY` via HKDF with info
+ * The verify-only key is derived from `FLYHUB_MASTER_KEY` via HKDF with info
  * `"kody-preview:v1"` — distinct from the `"kody-chat-token:"` purpose that
- * chat-token.ts uses. Rotating `KODY_MASTER_KEY` invalidates all in-flight
+ * chat-token.ts uses. Rotating `FLYHUB_MASTER_KEY` invalidates all in-flight
  * preview tickets (same semantics as chat-token).
  */
 
@@ -21,18 +21,18 @@ const PREVIEW_KEY_INFO = "kody-preview:v1";
 const HMAC_BYTES = 16; // 128 bits — same output size as chat-token
 
 /**
- * Derive a 32-byte verify-only key from `KODY_MASTER_KEY` using HKDF-SHA256.
+ * Derive a 32-byte verify-only key from `FLYHUB_MASTER_KEY` using HKDF-SHA256.
  * This derived key is what ships to preview machines (via runtime env), not
  * the raw master key — containing blast radius if a preview machine env leaks.
  *
- * Throws if `KODY_MASTER_KEY` is not configured (same hard dependency as
+ * Throws if `FLYHUB_MASTER_KEY` is not configured (same hard dependency as
  * `chat-token.ts` and `vapid-keys.ts`).
  */
 export function derivePreviewKey(): Buffer {
-  const masterRaw = process.env.KODY_MASTER_KEY?.trim();
+  const masterRaw = process.env.FLYHUB_MASTER_KEY?.trim();
   if (!masterRaw) {
     throw new Error(
-      "KODY_MASTER_KEY is not configured — required for preview ticket derivation",
+      "FLYHUB_MASTER_KEY is not configured — required for preview ticket derivation",
     );
   }
 
