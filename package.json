@@ -40,6 +40,7 @@
   "dependencies": {
     "@tanstack/react-query": "5.95.0",
     "@kody-ade/base": "workspace:*",
+    "@kody-ade/backend": "workspace:*",
     "@kody-ade/engine-contracts": "workspace:*",
     "@kody-ade/terminal": "workspace:*",
     "@octokit/rest": "^22.0.1",
