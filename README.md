@@ -14,6 +14,7 @@ Its `@kody-ade/base`, `@kody-ade/terminal`, and
 - `builder/`: preview image builder and app gateway images
 - `browser/`: hosted browser runtime and Docker image
 - `tests/`: package unit and live integration tests
+- `src/dashboard/`: Fly pages and browser UI consumed by Kody route entrypoints
 
 ## Kody development checkout
 
@@ -24,6 +25,10 @@ Kody checkout. From the Kody root, run `pnpm install`, then
 
 The browser runtime has its own npm lockfile. The preview builder has its own
 pnpm lockfile. Both can be developed and built from this repository root.
+The dashboard UI imports Kody host layout, auth, and repository routing through
+the `@dashboard` alias. Its integration is typechecked and browser-tested in
+the Kody workspace; the Fly package's standalone typecheck covers its provider
+and runtime code.
 
 ## Publishing
 

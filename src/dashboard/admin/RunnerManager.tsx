@@ -34,7 +34,7 @@ import { Input } from "@kody-ade/base/ui/input";
 import { FlyActivityTab } from "../previews/FlyActivityTab";
 import { FlyMachinesTable } from "../previews/FlyMachinesTable";
 import { FlyPreviewsList } from "../previews/FlyPreviewsList";
-import { PreviewsCard } from "@dashboard/features/previews/components/PreviewsCard";
+import { PreviewsCard } from "../previews/PreviewsCard";
 import { PageShell } from "@dashboard/lib/components/PageShell";
 import { SimpleTooltip } from "@dashboard/lib/components/SimpleTooltip";
 import { VaultLockedBanner } from "@dashboard/lib/components/VaultLockedBanner";
