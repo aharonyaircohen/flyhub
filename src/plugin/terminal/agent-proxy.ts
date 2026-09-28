@@ -3,7 +3,7 @@ import {
   TerminalEventSchema,
   type TerminalCommand,
   type TerminalEvent,
-} from "@kody-ade/terminal/terminal-session-model";
+} from "../../terminal/terminal-session-model";
 
 export interface BrainTerminalProxyClaims {
   owner: string;

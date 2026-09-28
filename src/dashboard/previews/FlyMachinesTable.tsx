@@ -39,14 +39,14 @@ import { Card, CardContent } from "@kody-ade/base/ui/card";
 import {
   batchSuspendRunning,
   countRunningInGroup,
-} from "@kody-ade/base/infrastructure/server-machine-model";
+} from "../../infrastructure/server-machine-model";
 import {
   FLY_FEATURE_TITLE,
   isServerProviderMachineRunning,
   type ServerProviderFeature,
   type ServerProviderInventory,
   type ServerProviderMachineRow,
-} from "@kody-ade/base/infrastructure/server-machine-model";
+} from "../../infrastructure/server-machine-model";
 import { ConfirmDialog } from "@dashboard/lib/components/ConfirmDialog";
 import { EmptyState } from "@dashboard/lib/components/EmptyState";
 import { MasterDetailShell } from "@dashboard/lib/components/MasterDetailShell";

@@ -6,7 +6,7 @@
  *   as deployments; Fly app/machine details stay in this plugin.
  */
 
-import type { DeploymentProvider } from "@kody-ade/base/infrastructure/contracts";
+import type { DeploymentProvider } from "../infrastructure/contracts";
 import { logger } from "../logger";
 import {
   getPreviewBuilderStatus,

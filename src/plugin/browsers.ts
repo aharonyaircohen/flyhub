@@ -9,7 +9,7 @@
 
 import { createHash } from "node:crypto";
 
-import type { BrowserProvider } from "@kody-ade/base/infrastructure/contracts";
+import type { BrowserProvider } from "../infrastructure/contracts";
 import {
   allocateSharedIps,
   appExists,

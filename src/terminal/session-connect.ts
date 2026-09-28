@@ -21,8 +21,8 @@ import {
   terminalActivityLimitForTarget,
   terminalBridgeSessionIdForTarget,
   type TerminalTargetInput,
-} from "@kody-ade/terminal/session";
-import { mintTerminalBridgeToken } from "@kody-ade/terminal/terminal-token";
+} from "./session";
+import { mintTerminalBridgeToken } from "./terminal-token";
 
 import {
   serverProviderHostname,

@@ -11,7 +11,7 @@
  * omits the saved Brain machine — graceful degradation, not an error.
  */
 
-import type { ServerProviderMachineRow } from "@kody-ade/base/infrastructure/server-machine-model";
+import type { ServerProviderMachineRow } from "../../infrastructure/server-machine-model";
 
 /**
  * Structural subset of the host Brain feature's BrainServiceResolution —

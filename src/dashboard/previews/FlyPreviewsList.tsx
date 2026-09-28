@@ -18,7 +18,7 @@ import { Button } from "@kody-ade/base/ui/button";
 import type {
   ServerProviderInventory,
   ServerProviderMachineRow,
-} from "@kody-ade/base/infrastructure/server-machine-model";
+} from "../../infrastructure/server-machine-model";
 
 interface BranchPreviewResponse {
   previews?: Array<{
