@@ -15,6 +15,7 @@ workspace to typecheck and test all modules.
 - `browser/`: hosted browser runtime and Docker image
 - `tests/`: package unit and live integration tests
 - `src/dashboard/`: Fly pages and browser UI consumed by Kody route entrypoints
+- `apps/dashboard/`: standalone Flyhub dashboard (own login, Fly apps, machines, volumes)
 
 ## Development
 
@@ -23,6 +24,21 @@ pnpm lockfile. Both can be developed and built from this repository root.
 The dashboard UI imports Kody host layout, auth, and repository routing through
 the `@dashboard` alias. Those adapters need a host application. The browser
 image can be built from this repository root without a Kody checkout.
+
+The new dashboard can be installed and run without Kody packages:
+
+```sh
+cd apps/dashboard
+pnpm install
+cp .env.example .env.local
+# Fill in FLYHUB_ADMIN_TOKEN, FLY_API_TOKEN, and FLY_ORG_SLUG.
+pnpm dev
+```
+
+Open `http://localhost:3334`. The admin token is used only to sign in; Fly
+credentials stay on the server. The dashboard is an initial standalone surface.
+Preview builds, browser sessions, runners, and legacy Kody route adapters still
+need to be moved before the whole repository is independent.
 
 ## Publishing
 
