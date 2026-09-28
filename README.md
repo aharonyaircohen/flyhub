@@ -25,7 +25,9 @@ Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly t
 - `src/`: extracted Fly providers and older Kody integration code
 - `tests/`: portable Fly tests and older Kody integration tests
 
-The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Automated GitHub preview webhooks, runner dispatch, and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
+The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Runner dispatch and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
+
+To automate PR previews, set `FLYHUB_GITHUB_WEBHOOK_SECRET` and `GITHUB_TOKEN`, then point a GitHub repository webhook to `/api/webhooks/github` with pull request events enabled. The webhook must reach a hosted Flyhub endpoint; it cannot call a loopback server.
 
 ## Images
 
