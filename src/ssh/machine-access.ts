@@ -1,6 +1,6 @@
 import { generateKeyPair, type KeyObject } from "node:crypto";
 import { promisify } from "node:util";
-import { encrypt, decrypt } from "@kody-ade/base/vault/crypto";
+import { encrypt, decrypt } from "../crypto";
 import { z } from "zod";
 
 const generate = promisify(generateKeyPair);
