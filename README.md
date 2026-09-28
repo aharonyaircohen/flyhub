@@ -34,6 +34,7 @@ and runtime code.
 
 The browser image workflow builds `browser/Dockerfile` and publishes
 `ghcr.io/aharonyaircohen/kody-browser`. The builder deployment uses
-`builder/fly.toml` and the Kody dashboard's `builder:publish` command.
+`builder/fly.toml` and `scripts/publish-preview-builder.mjs`. Kody's
+`builder:publish` command invokes that script from the Flyhub checkout.
 
 Do not put Fly API tokens or other secrets in this repository.
