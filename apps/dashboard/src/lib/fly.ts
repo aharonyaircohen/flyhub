@@ -7,7 +7,7 @@ import {
   destroyMachine,
   type FlyPreviewConfig,
 } from "../../../../src/plugin/previews/machines-client";
-import { listVolumes } from "../../../../src/apps/resources-client";
+import { deleteVolume, listVolumes, snapshotVolume } from "../../../../src/apps/resources-client";
 import { mintBrowserTicket } from "../../../../src/browsers/ticket";
 
 export function flyConfig(): FlyPreviewConfig | null {
@@ -61,4 +61,15 @@ export function browserDirectUrl(app: string, machine: Awaited<ReturnType<typeof
 
 export async function findMachine(app: string, id: string, config: FlyPreviewConfig) {
   return (await listMachines(app, config)).find((machine) => machine.id === id);
+}
+
+export async function actOnVolume(app: string, id: string, action: "snapshot" | "delete", config: FlyPreviewConfig) {
+  const apps = await listAppsByPrefix("", config);
+  if (!apps.includes(app)) throw new Error("App not found in this organization");
+  const data = await listVolumes(app, config);
+  const volume = Array.isArray(data) ? data.find((item) => item?.id === id) : null;
+  if (!volume) throw new Error("Volume not found");
+  if (action === "delete" && volume.attached_machine_id) throw new Error("Detach the volume before deleting it");
+  await snapshotVolume(app, id, config);
+  if (action === "delete") await deleteVolume(app, id, config);
 }
