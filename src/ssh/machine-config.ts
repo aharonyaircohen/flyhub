@@ -3,7 +3,7 @@ import {
   decrypt,
   encrypt,
   isVaultConfigured,
-} from "@kody-ade/base/vault/crypto";
+} from "../crypto";
 import {
   allocateSharedIps,
   listMachines,

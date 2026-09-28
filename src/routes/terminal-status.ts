@@ -20,8 +20,8 @@ import {
   resolveBrainTerminalTargetInput,
   resolveTerminalTargetMachine,
   terminalBridgeSessionIdForTarget,
-} from "@kody-ade/terminal/session";
-import { mintTerminalBridgeToken } from "@kody-ade/terminal/terminal-token";
+} from "../terminal/session";
+import { mintTerminalBridgeToken } from "../terminal/terminal-token";
 import {
   loadTerminalInventoryAuthority,
   terminalBridgeConfigCandidates,

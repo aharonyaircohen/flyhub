@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { mintTerminalBridgeToken } from "@kody-ade/terminal/terminal-token";
+import { mintTerminalBridgeToken } from "../../src/terminal/terminal-token";
 import { TERMINAL_BRIDGE_STATELESS_SCRIPT } from "../../src/plugin/terminal/bridge-stateless-script";
 
 const secret = "test-image-job-secret";

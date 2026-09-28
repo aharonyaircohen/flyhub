@@ -31,7 +31,7 @@
 import { Octokit } from "@octokit/rest";
 
 import { resolveBackgroundToken } from "@kody-ade/base/auth/background-token";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { createPreview } from "./preview-lifecycle";
 import { previewAppName } from "./preview-key";
 import { resolvePreviewConfigForRepo } from "./config";

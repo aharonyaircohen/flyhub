@@ -1,4 +1,4 @@
-import { TERMINAL_CLAIMS_VALIDATION_SCRIPT } from "@kody-ade/terminal/terminal-claims";
+import { TERMINAL_CLAIMS_VALIDATION_SCRIPT } from "../../terminal/terminal-claims";
 
 export const TERMINAL_BRIDGE_STATELESS_SCRIPT = String.raw`import crypto from "node:crypto";
 import http from "node:http";

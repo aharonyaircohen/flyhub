@@ -1,5 +1,5 @@
 {
-  "name": "kody-browser-runtime",
+  "name": "flyhub-browser-runtime",
   "private": true,
   "type": "module",
   "dependencies": {

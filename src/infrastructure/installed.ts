@@ -6,7 +6,7 @@
  *   plugins. App code imports this instead of naming a provider.
  */
 
-import { createInfrastructureRegistry } from "@kody-ade/base/infrastructure/registry";
+import { createInfrastructureRegistry } from "./registry";
 import {
   flyInfrastructurePlugin,
   flyInfrastructureSelection,

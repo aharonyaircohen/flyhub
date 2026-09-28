@@ -13,7 +13,7 @@
  * sessions fail with a clear error; non-brain sessions are unaffected.
  */
 
-import type { TerminalTargetInput } from "@kody-ade/terminal/session";
+import type { TerminalTargetInput } from "./session";
 
 import type { ServerProviderContext } from "../infrastructure/server-context";
 import type { ServerProviderInventory } from "../infrastructure/server-machines";

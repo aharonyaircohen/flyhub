@@ -6,9 +6,9 @@
  *   one-shot runner machine spawn. Vendor mechanics stay in this plugin.
  */
 
-import type { ServerProvider } from "@kody-ade/base/infrastructure/contracts";
+import type { ServerProvider } from "../infrastructure/contracts";
 import type { InfrastructureServerOperations } from "../infrastructure/server-operations";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { spawnRunner, type SpawnRunnerInput } from "./runners/fly";
 import {
   flyConfigFromContext,

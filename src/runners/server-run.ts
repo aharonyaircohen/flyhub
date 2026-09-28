@@ -8,8 +8,8 @@
 
 import type { NextRequest } from "next/server";
 import { getServerProvider } from "../infrastructure/installed";
-import type { ServerContextBase } from "@kody-ade/base/infrastructure/contracts";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { ServerContextBase } from "../infrastructure/contracts";
+import type { EngineExecutionRequest } from "./execution-request";
 
 export interface ClaimOrRunServerOptions {
   /** Task id / job id for logs, pool claims, and machine identity. */

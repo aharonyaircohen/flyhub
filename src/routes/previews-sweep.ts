@@ -16,7 +16,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { getRequestAuth, requireKodyAuth } from "@kody-ade/base/auth";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { sweepExpiredPreviews } from "../previews/sweep";
 
 export const runtime = "nodejs";

@@ -11,7 +11,7 @@ import type {
   InfrastructureProviderSelection,
   ServerContextBase,
   ServerProvider,
-} from "@kody-ade/base/infrastructure/contracts";
+} from "../infrastructure/contracts";
 import { flyDeploymentProvider } from "./deployments";
 import { flyBrowserProvider } from "./browsers";
 import { flyServerProvider } from "./servers";

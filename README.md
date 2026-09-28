@@ -1,34 +1,36 @@
-# flyhub
+# Flyhub
 
-Fly.io infrastructure for Kody: preview apps, runner and Brain machines,
-terminal and browser transports, and image builders.
+Flyhub is a separate repository for Fly.io infrastructure. Its standalone dashboard connects directly to a Fly organization. The browser runtime and preview builder also live here.
 
-This is a separate repository with the history of `kody-chat/packages/fly`.
-Kody has not been switched to consume Flyhub. The TypeScript package still
-imports Kody platform packages and currently requires a compatible Kody
-workspace to typecheck and test all modules.
+## Run locally
 
-## Layout
+Install Node 22 and pnpm 9, then run:
 
-- `src/`: Fly providers, routes, previews, runners, machines, and transports
+```sh
+pnpm install --frozen-lockfile
+cp apps/dashboard/.env.example apps/dashboard/.env.local
+# Set FLYHUB_ADMIN_TOKEN, FLY_API_TOKEN, and FLY_ORG_SLUG in .env.local.
+pnpm dev
+```
+
+Open `http://127.0.0.1:3355`. The dashboard listens on loopback, keeps the Fly token server side, and requires its own admin token. It lists the organization's apps, machines, and volumes; can start, stop, suspend, or destroy machines; build manual PR and branch previews; and create or open browser machines.
+
+`pnpm test`, `pnpm typecheck`, and `pnpm build` verify the standalone workspace. The active workspace installs no Kody packages.
+
+## Repository layout
+
+- `apps/dashboard/`: Flyhub dashboard, login, and Fly API routes
+- `browser/`: browser runtime and published Docker image
 - `builder/`: preview image builder and app gateway images
-- `browser/`: hosted browser runtime and Docker image
-- `tests/`: package unit and live integration tests
-- `src/dashboard/`: Fly pages and browser UI consumed by Kody route entrypoints
+- `src/`: extracted Fly providers and older Kody integration code
+- `tests/`: portable Fly tests and older Kody integration tests
 
-## Development
+The old Kody route, vault, backend, and UI adapters in `src/` remain as migration source. They are outside the active workspace build. Runner dispatch and terminal transport still need Flyhub owned entry points before the entire system is independent. Kody has not been switched to Flyhub.
 
-The browser runtime has its own npm lockfile. The preview builder has its own
-pnpm lockfile. Both can be developed and built from this repository root.
-The dashboard UI imports Kody host layout, auth, and repository routing through
-the `@dashboard` alias. Those adapters need a host application. The browser
-image can be built from this repository root without a Kody checkout.
+To automate PR previews, set `FLYHUB_GITHUB_WEBHOOK_SECRET` and `GITHUB_TOKEN`, then point a GitHub repository webhook to `/api/webhooks/github` with pull request events enabled. The webhook must reach a hosted Flyhub endpoint; it cannot call a loopback server.
 
-## Publishing
+## Images
 
-The browser image workflow builds `browser/Dockerfile` and publishes
-`ghcr.io/aharonyaircohen/flyhub-browser`. The builder deployment uses
-`builder/fly.toml` and `scripts/publish-preview-builder.mjs`. The GHCR image is
-public so Fly Machines can pull it without registry credentials.
+The browser image workflow publishes `ghcr.io/aharonyaircohen/flyhub-browser`. The preview builder uses the `flyhub-preview-builder` Fly app and is published with `pnpm builder:publish`. Manual PR and branch preview controls are available in the dashboard; publish the builder image before using them.
 
-Do not put Fly API tokens or other secrets in this repository.
+Never commit Fly tokens or other secrets.

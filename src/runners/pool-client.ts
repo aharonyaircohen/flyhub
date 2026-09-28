@@ -15,9 +15,9 @@
  * { ok: false }, and the caller falls back to the existing create-fresh
  * `spawnRunner`. The pool is an accelerator, not a hard dependency.
  */
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { derivePoolApiKey } from "./pool-keys";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "./execution-request";
 
 function poolBaseUrl(): string | null {
   const raw = process.env.FLY_POOL_URL?.trim();

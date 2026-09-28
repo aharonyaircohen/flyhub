@@ -10,7 +10,7 @@ import "server-only";
 
 import type { NextRequest } from "next/server";
 
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import {
   buildTerminalWebSocketUrl,
   isTerminalFeatureAllowed,
@@ -21,8 +21,8 @@ import {
   terminalActivityLimitForTarget,
   terminalBridgeSessionIdForTarget,
   type TerminalTargetInput,
-} from "@kody-ade/terminal/session";
-import { mintTerminalBridgeToken } from "@kody-ade/terminal/terminal-token";
+} from "./session";
+import { mintTerminalBridgeToken } from "./terminal-token";
 
 import {
   serverProviderHostname,

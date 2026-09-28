@@ -13,7 +13,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { getUserOctokit, requireKodyAuth } from "@kody-ade/base/auth";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { resolvePreviewConfigForOctokit } from "../previews/config";
 import {
   destroyPreview,

@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { mintTerminalBridgeToken } from "@kody-ade/terminal/terminal-token";
+import { mintTerminalBridgeToken } from "../../src/terminal/terminal-token";
 import {
   TERMINAL_BRIDGE_SCRIPT,
   TERMINAL_BRIDGE_START_SCRIPT,

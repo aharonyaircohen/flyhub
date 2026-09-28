@@ -27,7 +27,7 @@ import {
   resolveFlyPreviews,
   writeConfigPatch,
 } from "@kody-ade/base/engine/config";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 
 export const runtime = "nodejs";
 

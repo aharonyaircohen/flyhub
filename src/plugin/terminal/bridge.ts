@@ -8,8 +8,8 @@
  */
 import crypto from "node:crypto";
 
-import { logger } from "@kody-ade/base/logger";
-import { slugifyTitle } from "@kody-ade/base/slug";
+import { logger } from "../../logger";
+import { slugifyTitle } from "../../slug";
 
 import type { FlyPreviewConfig } from "../previews/machines-client";
 import { allocateIpsIfMissing } from "../runners/brain";

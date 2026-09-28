@@ -1,4 +1,4 @@
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "./execution-request";
 
 export interface KodyStoreTarget {
   storeRepoUrl?: string;

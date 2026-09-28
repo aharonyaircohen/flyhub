@@ -16,9 +16,9 @@
  * Reference: https://docs.machines.dev/swagger/index.html
  */
 
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../../logger";
 import { prepareMachineSsh } from "../../ssh/machine-config";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "../../runners/execution-request";
 
 const FLY_API_BASE = "https://api.machines.dev/v1";
 

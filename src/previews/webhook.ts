@@ -31,7 +31,7 @@ import { Octokit } from "@octokit/rest";
 
 import { resolveBackgroundToken } from "@kody-ade/base/auth/background-token";
 import { getTrackedBranchesReader } from "./tracked-branches-hook";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import { resolveVaultGithubToken } from "@kody-ade/base/vault/bootstrap";
 import { rebuildBaseImage } from "./base-rebuild";
 import { resolvePreviewConfigForRepo } from "./config";

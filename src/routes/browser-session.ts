@@ -18,7 +18,7 @@ import {
 } from "@kody-ade/base/auth";
 import { api as backendApi } from "@kody-ade/backend/api";
 import { createBackendClient } from "@kody-ade/backend/client";
-import { logger } from "@kody-ade/base/logger";
+import { logger } from "../logger";
 import {
   getBrowserProvider,
   type FlyBrowserAction,
