@@ -17,12 +17,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY packages/fly/browser/package.json packages/fly/browser/package-lock.json ./
+COPY browser/package.json browser/package-lock.json ./
 RUN npm ci --omit=dev --no-audit --no-fund
 
-COPY packages/fly/browser/server.ts ./server.ts
-COPY packages/fly/browser/start.sh ./start.sh
-COPY packages/fly/src/browsers ./src/browsers
+COPY browser/server.ts ./server.ts
+COPY browser/start.sh ./start.sh
+COPY src/browsers ./src/browsers
 
 RUN chmod +x /app/start.sh \
     && useradd --create-home --uid 10001 browser \
