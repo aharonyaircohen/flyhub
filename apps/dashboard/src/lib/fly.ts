@@ -5,6 +5,7 @@ import {
   stopMachine,
   suspendMachine,
   destroyMachine,
+  destroyApp,
   type FlyPreviewConfig,
 } from "../../../../src/plugin/previews/machines-client";
 import { deleteVolume, listVolumes, snapshotVolume } from "../../../../src/apps/resources-client";
@@ -72,4 +73,15 @@ export async function actOnVolume(app: string, id: string, action: "snapshot" | 
   if (action === "delete" && volume.attached_machine_id) throw new Error("Detach the volume before deleting it");
   await snapshotVolume(app, id, config);
   if (action === "delete") await deleteVolume(app, id, config);
+}
+
+export function isManagedApp(app: string): boolean {
+  return app.startsWith("flyhub-browser-") || app.startsWith("kp-");
+}
+
+export async function destroyManagedApp(app: string, config: FlyPreviewConfig) {
+  if (!isManagedApp(app)) throw new Error("App is not managed by Flyhub");
+  const apps = await listAppsByPrefix("", config);
+  if (!apps.includes(app)) throw new Error("App not found in this organization");
+  await destroyApp(app, config);
 }

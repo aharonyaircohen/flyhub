@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { readBrowserTicket } from "../../../../src/browsers/ticket";
-import { actOnVolume, browserDirectUrl } from "./fly";
+import { actOnVolume, browserDirectUrl, isManagedApp } from "./fly";
 
 const key = Buffer.alloc(32, 7);
 const machine = {
@@ -54,5 +54,14 @@ describe("volume actions", () => {
     });
     await actOnVolume("my-app", "vol_1", "delete", config);
     expect(calls.slice(-2)).toEqual(["POST /v1/apps/my-app/volumes/vol_1/snapshots", "DELETE /v1/apps/my-app/volumes/vol_1"]);
+  });
+});
+
+describe("managed app deletion", () => {
+  it("restricts deletion to Flyhub browser and preview apps", () => {
+    expect(isManagedApp("flyhub-browser-example")).toBe(true);
+    expect(isManagedApp("kp-example")).toBe(true);
+    expect(isManagedApp("kody-brain-example")).toBe(false);
+    expect(isManagedApp("kody-browser-example")).toBe(false);
   });
 });
