@@ -12,7 +12,7 @@ import type { Octokit } from "@octokit/rest";
 import { getServerProvider } from "./installed";
 import type { ServerContextBase } from "./contracts";
 import type { EngineRuntimeModelConfig } from "@kody-ade/base/variables/models";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "../runners/execution-request";
 import type {
   ServerProviderFeature as ProviderFeature,
   ServerProviderInventory as ProviderInventory,

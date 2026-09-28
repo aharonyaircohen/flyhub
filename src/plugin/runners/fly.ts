@@ -18,7 +18,7 @@
 
 import { logger } from "../../logger";
 import { prepareMachineSsh } from "../../ssh/machine-config";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "../../runners/execution-request";
 
 const FLY_API_BASE = "https://api.machines.dev/v1";
 

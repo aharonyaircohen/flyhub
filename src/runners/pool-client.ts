@@ -17,7 +17,7 @@
  */
 import { logger } from "../logger";
 import { derivePoolApiKey } from "./pool-keys";
-import type { EngineExecutionRequest } from "@kody-ade/engine-contracts";
+import type { EngineExecutionRequest } from "./execution-request";
 
 function poolBaseUrl(): string | null {
   const raw = process.env.FLY_POOL_URL?.trim();
